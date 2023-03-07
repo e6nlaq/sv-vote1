@@ -52,6 +52,7 @@ const main = (data) => {//メッセージを受け取ったときにどんな処
 				a++;
 				console.log(`ID${id}(${usr})さんがAに投票しました。Aの投票数: ${a}`);
 				scloudjs.sendtocloud("sev", id + "3");
+				userlist.push(usr);
 			}
 			break;
 
@@ -63,6 +64,7 @@ const main = (data) => {//メッセージを受け取ったときにどんな処
 				b++;
 				console.log(`ID${id}(${usr})さんがBに投票しました。Bの投票数: ${b}`);
 				scloudjs.sendtocloud("sev", id + "3");
+				userlist.push(usr);
 			}
 			break;
 
@@ -74,11 +76,12 @@ const main = (data) => {//メッセージを受け取ったときにどんな処
 				c++;
 				console.log(`ID${id}(${usr})さんがCに投票しました。Bの投票数: ${c}`);
 				scloudjs.sendtocloud("sev", id + "3");
+				userlist.push(usr);
 			}
 			break;
 
 		default:
-			console.log(`Inveid Request: ${dat[6]}`);
+			console.log(`無効なリクエスト(${dat[6]})`);
 			break;
 	}
 
