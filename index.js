@@ -33,9 +33,9 @@ const main = (data) => {//メッセージを受け取ったときにどんな処
 	if (dat[6] != "0") {
 		usr = ango(dat.substr(7));
 
-		if (userlist.includes(usr)) {
-			scloudjs.sendtocloud("sev", id + "2");
-		}
+		// if (userlist.includes(usr)) {
+		// 	scloudjs.sendtocloud("sev", id + "2");
+		// }
 	}
 
 	switch (dat[6]) {
@@ -51,17 +51,36 @@ const main = (data) => {//メッセージを受け取ったときにどんな処
 			} else {
 				a++;
 				console.log(`ID${id}(${usr})さんがAに投票しました。Aの投票数: ${a}`);
+				scloudjs.sendtocloud("sev", id + "3");
 			}
 			break;
 
+		case "2":
+			if (userlist.includes(usr)) {
+				scloudjs.sendtocloud("sev", id + "2");
+				console.log(`ID${id}(${usr})さんが重複しました。`);
+			} else {
+				b++;
+				console.log(`ID${id}(${usr})さんがBに投票しました。Bの投票数: ${b}`);
+				scloudjs.sendtocloud("sev", id + "3");
+			}
+			break;
+
+		case "3":
+			if (userlist.includes(usr)) {
+				scloudjs.sendtocloud("sev", id + "2");
+				console.log(`ID${id}(${usr})さんが重複しました。`);
+			} else {
+				c++;
+				console.log(`ID${id}(${usr})さんがCに投票しました。Bの投票数: ${c}`);
+				scloudjs.sendtocloud("sev", id + "3");
+			}
+			break;
 
 		default:
 			console.log(`Inveid Request: ${dat[6]}`);
 			break;
 	}
-
-	// 初期化
-	scloudjs.sendtocloud("sev", 0);
 
 };
 
