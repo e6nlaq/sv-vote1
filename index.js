@@ -4,6 +4,21 @@ let clouddatas = new Object();//このオブジェクトにクラウド変数の
 // ユーザーリスト
 var userlist = [];
 
+// 票数
+var a = 0, b = 0, c = 0;
+
+function ango(str) {
+	const ang = ['', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '_'];
+	var ans = "";
+
+	for (var i = 0; i < str.size(); i += 2) {
+		ans += ang[Number(str.substr(i, 2))];
+	}
+
+	return ans;
+
+}
+
 const main = (data) => {//メッセージを受け取ったときにどんな処理をするかを設定する
 	const temp = scloudjs.parsedata(data, clouddatas);//受け取ったメッセージを整理する
 	clouddatas = temp.clouddatas;//クラウド変数のデータ
@@ -13,16 +28,40 @@ const main = (data) => {//メッセージを受け取ったときにどんな処
 	const id = clouddatas["usr"].value.substr(0, 6);
 	const dat = clouddatas["usr"].value;
 
+	var usr = "";
+
+	if (dat[6] != "0") {
+		usr = ango(dat.substr(7));
+
+		if (userlist.includes(usr)) {
+			scloudjs.sendtocloud("sev", id + "2");
+		}
+	}
+
 	switch (dat[6]) {
 		case "0":
 			scloudjs.sendtocloud("sev", id + "1");
-			console.log(`Request 0: ${id}`);
+			console.log(`ID${id}さんが参加しました。`);
 			break;
+
+		case "1":
+			if (userlist.includes(usr)) {
+				scloudjs.sendtocloud("sev", id + "2");
+				console.log(`ID${id}(${usr})さんが重複しました。`);
+			} else {
+				a++;
+				console.log(`ID${id}(${usr})さんがAに投票しました。Aの投票数: ${a}`);
+			}
+			break;
+
 
 		default:
 			console.log(`Inveid Request: ${dat[6]}`);
 			break;
 	}
+
+	// 初期化
+	scloudjs.sendtocloud("sev", 0);
 
 };
 
